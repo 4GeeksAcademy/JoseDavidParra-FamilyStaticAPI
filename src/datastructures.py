@@ -79,6 +79,21 @@ class FamilyStructure:
                 }
                 return response_body
         return "Miembro no encontrado"
+    
+    def update_member(self,id,update_member):
+        counter = 0
+        for member in self._members:
+            if member["id"] == id:
+                del self._members[counter]
+                update_member["id"]=id
+                update_member["last_name"]=self.last_name
+                self._members.append(update_member)
+                response_body={
+                    "msg":"ok - member updated",
+                }
+                return response_body
+            counter+=1
+        return "Miembro no encontrado"
 
     # this method is done, it returns a list with all the family members
     def get_all_members(self):

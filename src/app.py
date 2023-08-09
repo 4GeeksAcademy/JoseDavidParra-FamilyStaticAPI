@@ -42,13 +42,17 @@ def add_member():
     response = jackson_family.add_member(request_body)
     return jsonify(response),200
 
-@app.route('/members/<int:member_id>',methods=['GET','DELETE'])
-def get_delete_member(member_id):
+@app.route('/members/<int:member_id>',methods=['GET','DELETE','PUT'])
+def get_delete_put_member(member_id):
     if request.method == 'GET':
         response = jackson_family.get_member(member_id)
         return jsonify(response),200
-    if request.method == 'DELETE':
+    elif request.method == 'DELETE':
         response = jackson_family.delete_member(member_id)
+        return jsonify(response),200
+    elif request.method == 'PUT':
+        request_body = request.get_json(force=True)
+        response = jackson_family.update_member(member_id,request_body)
         return jsonify(response),200
 
 # this only runs if `$ python src/app.py` is executed
